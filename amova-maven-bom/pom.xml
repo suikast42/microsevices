@@ -2,18 +2,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>eu.amova.cloud.platform</groupId>
-    <artifactId>cloud-enterprise-platform-bom</artifactId>
-    <version>0.0.l-SNAPSHOT</version>
+    <groupId>eu.amova.common</groupId>
+    <artifactId>amova-maven-bom</artifactId>
+    <version>1.0.0.Final</version>
     <packaging>pom</packaging>
 
-    <name>cloud-enterprise-platform-bom</name>
+    <name>amova-maven-bom</name>
      
   <prerequisites>
    <maven>3.2.1</maven>
  </prerequisites>
     <description>
-        Cloud Enterprise "Bill of Materials"
+        BOM for all maven based projets. Defines plugin version and minimal dependencies für testing and logging.
     </description>
 
     <properties>
@@ -107,26 +107,7 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <!-- dependencies for all modules -->
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-        </dependency>
-       <dependency>
-	<groupId>org.apache.logging.log4j</groupId>
-	<artifactId>log4j-api</artifactId>
-       </dependency>
-      <dependency>
-	<groupId>org.apache.logging.log4j</groupId>
-	<artifactId>log4j-core</artifactId>
-       </dependency>
-    </dependencies>
+    
     <profiles>
         <profile>
             <activation>
