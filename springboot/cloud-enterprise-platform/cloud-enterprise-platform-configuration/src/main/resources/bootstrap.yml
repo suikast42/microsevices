@@ -1,0 +1,29 @@
+info:
+component: Enterprise configuration platform configuration serivce
+
+jmx:
+default_domain: eu.amova.cloud.platform
+
+server:
+  port: 9000
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${user.home}/.enterprisecloud/configurationserver/git
+
+  application:
+    name: configurationserver
+
+debug: false
+management:
+  address: localhost
+  port: 9001
+  security:
+    enabled: false
+  context-path: /admin
+
+
+

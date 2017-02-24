@@ -12,7 +12,7 @@
     <version>0.0.l-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>cloud-enterprise-platform-bom</name>
+    <name>cloud-enterprise-platform-parent</name>
 
     <prerequisites>
         <maven>3.2.1</maven>
@@ -111,16 +111,69 @@
             </plugin>
         </plugins>
     </reporting>
-    
+
+    <profiles>
+        <profile>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <!-- Profile for attach javadoc and sources to nexus -->
+            <id>Javadoc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <additionalparam>-Xdoclint:none</additionalparam>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <!-- dependencies for all modules -->
     <dependencies>
+
+        <!--enable web capabilities for all modules-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--enable configuration capabilities for all modules-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -164,7 +217,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <!-- Build configuration for all projects -->
     <build>
         <!--configured plugins for every build-->
@@ -236,7 +289,7 @@
             </plugin>
         </plugins>
 
-         <!--fixed versions for used plugins-->
+        <!--fixed versions for used plugins-->
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -286,8 +339,9 @@
                     <inherited>true</inherited>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>${version.plugin-jar}</version>
+                    <version>${version.plugin.jar}</version>
                     <inherited>true</inherited>
                 </plugin>
                 <plugin>
@@ -329,4 +383,7 @@
             </plugins>
         </pluginManagement>
     </build>
+    <modules>
+        <module>cloud-enterprise-platform-configuration</module>
+    </modules>
 </project>

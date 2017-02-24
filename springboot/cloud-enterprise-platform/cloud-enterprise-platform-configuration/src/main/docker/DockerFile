@@ -1,0 +1,8 @@
+# Dockerfile example
+FROM hello-world
+MAINTAINER Süleyman Vurucu <sueleyman.vurucu@amova.eu>
+RUN /bin/bash
+RUN echo Build running ... > /dev/null
+
+EXPOSE 8080
+VOLUME [$HOME/.enterprisecloud]
