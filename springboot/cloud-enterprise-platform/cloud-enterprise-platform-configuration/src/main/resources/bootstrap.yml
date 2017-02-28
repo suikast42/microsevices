@@ -12,18 +12,19 @@ spring:
     config:
       server:
         git:
-          uri: ${user.home}/.enterprisecloud/configurationserver/git
+          #uri: https://github.com/suikast42/TestConfig.git
+          #uri: ${user.home}\fake\configuration
+          uri: ${user.home}\configuration
+          clone-on-start: true
 
   application:
     name: configurationserver
 
 debug: false
 management:
-  address: localhost
-  port: 9001
   security:
     enabled: false
-  context-path: /admin
+
 
 
 

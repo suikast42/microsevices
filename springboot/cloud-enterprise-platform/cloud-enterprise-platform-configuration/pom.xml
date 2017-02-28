@@ -16,12 +16,15 @@
         <version>0.0.l-SNAPSHOT</version>
     </parent>
 
-
+    <properties>
+        <docker.image.name>configuration</docker.image.name>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
     </dependencies>
+   
 
 </project>

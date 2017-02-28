@@ -1,0 +1,12 @@
+# Dockerfile example
+FROM xenial:latest
+#FROM 192.168.99.100:5000/xenial/latest
+MAINTAINER Sueleyman Vurucu <sueleyman.vurucu@amova.eu>
+VOLUME /home
+ADD target/cloud-enterprise-platform-configuration-0.0.l-SNAPSHOT.jar app.jar
+RUN sh -c 'touch /app.jar'
+RUN git config --global user.email 'configurationy@configuration.com'
+RUN git config --global user.name 'configuration'
+EXPOSE 9000:9000
+ENV JAVA_OPTS=""
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar /app.jar"]
