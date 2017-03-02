@@ -5,8 +5,8 @@ MAINTAINER Sueleyman Vurucu <sueleyman.vurucu@amova.eu>
 VOLUME /home
 ADD target/cloud-enterprise-platform-configuration-0.0.l-SNAPSHOT.jar app.jar
 RUN sh -c 'touch /app.jar'
-RUN git config --global user.email 'configurationy@configuration.com'
-RUN git config --global user.name 'configuration'
+RUN git config --global user.name "platform"
+RUN git config --global user.email "platform@platform.com"
 EXPOSE 9000:9000
 ENV JAVA_OPTS=""
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar /app.jar"]

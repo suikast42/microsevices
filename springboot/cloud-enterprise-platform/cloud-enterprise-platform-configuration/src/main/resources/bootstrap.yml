@@ -4,6 +4,7 @@ component: Enterprise configuration platform configuration serivce
 jmx:
 default_domain: eu.amova.cloud.platform
 
+
 server:
   port: 9000
 
@@ -12,13 +13,17 @@ spring:
     config:
       server:
         git:
+          uri: http://192.168.99.100/platform/platformconfig.git
           #uri: https://github.com/suikast42/TestConfig.git
           #uri: ${user.home}\fake\configuration
-          uri: ${user.home}\configuration
+          #uri: ${user.home}\configuration
+          #uri: file:///${user.home}/configuration
           clone-on-start: true
 
   application:
     name: configurationserver
+  #profiles:
+  #   active: native
 
 debug: false
 management:
