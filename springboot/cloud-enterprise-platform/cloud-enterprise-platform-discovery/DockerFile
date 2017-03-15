@@ -1,0 +1,13 @@
+# Dockerfile example
+FROM xenial:latest
+#FROM 192.168.99.100:5000/xenial/latest
+MAINTAINER Sueleyman Vurucu <sueleyman.vurucu@amova.eu>
+#VOLUME /home
+ADD target/cloud-enterprise-platform-discovery-*.jar app.jar
+RUN sh -c 'touch /app.jar'
+#RUN git config --global user.name "platform"
+#RUN git config --global user.email "platform@platform.com"
+EXPOSE 9001:9001
+#ENV JAVA_OPTS="-server -Xms256m -Xmx256m "
+#ENTRYPOINT [ "sh", "-c", "java -server -Xms256m -Xmx256m -jar /app.jar"]
+ENTRYPOINT ["java","-server","-Xms256m","-Xmx256m","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
