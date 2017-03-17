@@ -1,0 +1,6 @@
+# Dockerfile example
+FROM rabbitmq:latest
+#FROM 192.168.99.100:5000/xenial/latest
+MAINTAINER Sueleyman Vurucu <sueleyman.vurucu@amova.eu>
+RUN sh -c 'rabbitmq-plugins enable rabbitmq_management'
+EXPOSE 15672:15672

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>${version.spring.boot}</version>
+        <version>1.5.1.RELEASE</version>
     </parent>
 
     <groupId>eu.amova.cloud.platform</groupId>
@@ -27,7 +27,7 @@
         <docker.image.name>not set</docker.image.name>
         <java.version>1.8</java.version>
 
-        <version.spring.boot>1.5.1.RELEASE</version.spring.boot>
+        <version.spring.boot>${parent.version}</version.spring.boot>
         <version.spring.cloud>Camden.SR6</version.spring.cloud>
 
         <version.junit>4.12</version.junit>
@@ -152,6 +152,42 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <id>Docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <configuration>
+                                    <target>
+                                        <exec executable="docker">
+                                            <arg value="build"/>
+                                            <arg value="-t"/>
+                                            <arg value="${docker.image.prefix}/${docker.image.name}"/>
+                                            <arg value="."/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <failOnError>true</failOnError>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <!-- dependencies for all modules -->
@@ -220,53 +256,28 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-             
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <configuration>
-                            <target>
-                                <exec executable="docker">
-                                    <arg value="build"/>
-                                    <arg value="-t"/>
-                                    <arg value="${docker.image.prefix}/${docker.image.name}"/>
-                                    <arg value="."/>
-                                </exec>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <failOnError>true</failOnError>
-                </configuration>
-            </plugin>
+
             <!--<plugin>-->
-                <!--<groupId>com.spotify</groupId>-->
-                <!--<artifactId>docker-maven-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>build</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
-                    <!--<resources>-->
-                        <!--<resource>-->
-                            <!--<targetPath>/</targetPath>-->
-                            <!--<directory>${project.build.directory}</directory>-->
-                            <!--<include>${project.build.finalName}.jar</include>-->
-                        <!--</resource>-->
-                    <!--</resources>-->
-                <!--</configuration>-->
+            <!--<groupId>com.spotify</groupId>-->
+            <!--<artifactId>docker-maven-plugin</artifactId>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+            <!--<goal>build</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--<configuration>-->
+            <!--<imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
+            <!--<resources>-->
+            <!--<resource>-->
+            <!--<targetPath>/</targetPath>-->
+            <!--<directory>${project.build.directory}</directory>-->
+            <!--<include>${project.build.finalName}.jar</include>-->
+            <!--</resource>-->
+            <!--</resources>-->
+            <!--</configuration>-->
             <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -396,5 +407,7 @@
     </build>
     <modules>
         <module>cloud-enterprise-platform-configuration</module>
+        <module>cloud-enterprise-platform-discovery</module>
+        <module>cloud-enterprise-platform-messaging</module>
     </modules>
 </project>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>eu.amova.cloud.platform.service</groupId>
+	<artifactId>cloud-enterprise-platform-messaging</artifactId>
+	<packaging>jar</packaging>
+
+	<name>cloud-enterprise-platform-messaging</name>
+	<description>Cloud platform service messaging </description>
+
+	<parent>
+		<groupId>eu.amova.cloud.platform</groupId>
+		<artifactId>cloud-enterprise-platform</artifactId>
+		<version>0.0.l-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<docker.image.name>discovery</docker.image.name>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.cloud</groupId>-->
+			<!--<artifactId>spring-cloud-starter-config</artifactId>-->
+		<!--</dependency>-->
+	</dependencies>
+</project>
+
+

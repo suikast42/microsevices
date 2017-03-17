@@ -20,17 +20,17 @@ public class CloudEnterprisePlatformConfigurationApplication {
 		SpringApplication.run(CloudEnterprisePlatformConfigurationApplication.class, args);
 	}
 
-	@Autowired
-	private EurekaInstanceConfigBean conf;
-	@PostConstruct
-	private void init( ){
-		if(conf.isPreferIpAddress()) {
-			// worarround for get the hosname instaed of ip adress here.
-			conf.setPreferIpAddress(false);
-			String currentInstanceId = conf.getInstanceId();
-			conf.setInstanceId(currentInstanceId.replace(conf.getHostname(),conf.getIpAddress()));
-			conf.setPreferIpAddress(true);
-		}
-		
-	}
+//	@Autowired
+//	private EurekaInstanceConfigBean conf;
+//	@PostConstruct
+//	private void init( ){
+//		if(conf.isPreferIpAddress()) {
+//			// worarround for get the hosname instaed of ip adress here.
+//			conf.setPreferIpAddress(false);
+//			String currentInstanceId = conf.getInstanceId();
+//			conf.setInstanceId(currentInstanceId.replace(conf.getHostname(),conf.getIpAddress()));
+//			conf.setPreferIpAddress(true);
+//		}
+//
+//	}
 }
