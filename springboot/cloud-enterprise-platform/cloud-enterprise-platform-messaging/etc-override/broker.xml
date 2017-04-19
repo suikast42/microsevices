@@ -1,0 +1,79 @@
+<configuration xmlns="urn:activemq"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="urn:activemq /schema/artemis-configuration.xsd">
+
+    <jms xmlns="urn:activemq:jms">
+        <queue name="DLQ"/>
+        <queue name="ExpiryQueue"/>
+    </jms>
+
+    <core xmlns="urn:activemq:core">
+
+        <!-- this could be ASYNCIO or NIO
+         -->
+        <journal-type>ASYNCIO</journal-type>
+
+        <paging-directory>./data/paging</paging-directory>
+
+        <bindings-directory>./data/bindings</bindings-directory>
+
+        <journal-directory>./data/journal</journal-directory>
+
+        <large-messages-directory>./data/large-messages</large-messages-directory>
+
+        <journal-min-files>10</journal-min-files>
+
+        <!--
+         This value was determined through a calculation.
+         Your system could perform 1.56 writes per millisecond
+         on the current journal configuration.
+         That translates as a sync write every 640000 nanoseconds
+        -->
+        <journal-buffer-timeout>640000</journal-buffer-timeout>
+
+
+        <acceptors>
+            <!-- Default ActiveMQ Artemis Acceptor.  Multi-protocol adapter.  Currently supports Core, OpenWire, Stomp and AMQP. -->
+            <!-- performance tests have shown that openWire performs best with these buffer sizes -->
+            <acceptor name="artemis">tcp://0.0.0.0:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576</acceptor>
+
+            <!-- AMQP Acceptor.  Listens on default AMQP port for AMQP traffic.-->
+            <acceptor name="amqp">tcp://0.0.0.0:5672?protocols=AMQP</acceptor>
+
+            <!-- STOMP Acceptor. -->
+            <acceptor name="stomp">tcp://0.0.0.0:61613?protocols=STOMP</acceptor>
+
+            <!-- HornetQ Compatibility Acceptor.  Enables ActiveMQ Artemis Core and STOMP for legacy HornetQ clients. -->
+            <acceptor name="hornetq">tcp://0.0.0.0:5445?protocols=HORNETQ,STOMP</acceptor>
+
+            <!-- MQTT Acceptor -->
+            <acceptor name="mqtt">tcp://0.0.0.0:1883?protocols=MQTT</acceptor>
+        </acceptors>
+
+
+        <security-settings>
+            <security-setting match="#">
+                <permission type="createDurableQueue" roles="wmsuserrole"/>
+                <permission type="deleteDurableQueue" roles="wmsuserrole"/>
+                <permission type="createNonDurableQueue" roles="wmsuserrole"/>
+                <permission type="deleteNonDurableQueue" roles="wmsuserrole"/>
+                <permission type="send" roles="wmsuserrole"/>
+                <permission type="consume" roles="wmsuserrole"/>
+                <permission type="manage" roles="wmsuserrole"/>
+            </security-setting>
+        </security-settings>
+
+        <address-settings>
+            <!--default for catch all-->
+            <address-setting match="#">
+                <dead-letter-address>jms.queue.DLQ</dead-letter-address>
+                <expiry-address>jms.queue.ExpiryQueue</expiry-address>
+                <redelivery-delay>0</redelivery-delay>
+                <max-size-bytes>10485760</max-size-bytes>
+                <message-counter-history-day-limit>10</message-counter-history-day-limit>
+                <address-full-policy>BLOCK</address-full-policy>
+            </address-setting>
+        </address-settings>
+    </core>
+</configuration>
+
