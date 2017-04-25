@@ -1,0 +1,4 @@
+# Dockerfile example
+# FROM vromero/activemq-artemis:1.1.0
+#FROM 192.168.99.100:5000/xenial/latest
+MAINTAINER Sueleyman Vurucu <sueleyman.vurucu@amova.eu>

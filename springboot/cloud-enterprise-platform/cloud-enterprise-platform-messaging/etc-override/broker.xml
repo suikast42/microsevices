@@ -26,7 +26,7 @@
         <!--
          This value was determined through a calculation.
          Your system could perform 1.56 writes per millisecond
-         on the current journal configuration.
+         on the current journal discovery.
          That translates as a sync write every 640000 nanoseconds
         -->
         <journal-buffer-timeout>640000</journal-buffer-timeout>

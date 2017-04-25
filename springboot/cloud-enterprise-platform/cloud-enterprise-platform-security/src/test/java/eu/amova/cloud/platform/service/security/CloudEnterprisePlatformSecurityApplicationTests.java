@@ -1,4 +1,4 @@
-package eu.amova.cloud.platform.service.configuration;
+package eu.amova.cloud.platform.service.security;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CloudEnterprisePlatformConfigurationApplicationTests {
+public class CloudEnterprisePlatformSecurityApplicationTests {
 
 	@Test
 	public void contextLoads() {

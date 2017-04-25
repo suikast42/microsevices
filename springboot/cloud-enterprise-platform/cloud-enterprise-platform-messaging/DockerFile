@@ -32,5 +32,5 @@ ENV ARTEMIS_PERF_JOURNAL  AUTO
 
 #Mount point 	                Description
 #/var/lib/artemis/data 	        Holds the data files used for storing persistent messages
-#/var/lib/artemis/etc 	        Hold the instance configuration files
-#/var/lib/artemis/etc-override 	Hold the instance configuration files
+#/var/lib/artemis/etc 	        Hold the instance discovery files
+#/var/lib/artemis/etc-override 	Hold the instance discovery files

@@ -1,4 +1,4 @@
-package eu.amova.cloud.platform.service.configuration;
+package eu.amova.cloud.platform.service.discovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

@@ -1,4 +1,4 @@
-package eu.amova.cloud.platform.service.configuration;
+package eu.amova.cloud.platform.service.discovery;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
+        <version>1.5.2.RELEASE</version>
     </parent>
 
     <groupId>eu.amova.cloud.platform</groupId>
@@ -245,7 +245,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- Build configuration for all projects -->
+    <!-- Build discovery for all projects -->
     <build>
         <!--configured plugins for every build-->
         <plugins>
@@ -273,7 +273,7 @@
             <!--</goals>-->
             <!--</execution>-->
             <!--</executions>-->
-            <!--<configuration>-->
+            <!--<discovery>-->
             <!--<imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
             <!--<resources>-->
             <!--<resource>-->
@@ -282,7 +282,7 @@
             <!--<include>${project.build.finalName}.jar</include>-->
             <!--</resource>-->
             <!--</resources>-->
-            <!--</configuration>-->
+            <!--</discovery>-->
             <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -307,7 +307,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <inherited>true</inherited>
-                <!-- <configuration> <rulesUri>http://www.mycompany.com/maven-version-rules.xml</rulesUri> </configuration> -->
+                <!-- <discovery> <rulesUri>http://www.mycompany.com/maven-version-rules.xml</rulesUri> </discovery> -->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -414,5 +414,6 @@
         <module>cloud-enterprise-platform-configuration</module>
         <module>cloud-enterprise-platform-discovery</module>
         <module>cloud-enterprise-platform-messaging</module>
+        <module>cloud-enterprise-platform-security</module>
     </modules>
 </project>

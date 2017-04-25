@@ -1,4 +1,4 @@
-package eu.amova.cloud.platform.service;
+package eu.amova.cloud.platform.service.messaging;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
