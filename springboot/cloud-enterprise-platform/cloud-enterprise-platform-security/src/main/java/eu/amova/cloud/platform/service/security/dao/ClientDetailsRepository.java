@@ -30,7 +30,7 @@ public class ClientDetailsRepository implements ClientDetailsService,ClientRegis
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<SimpleGrantedAuthority>  auths = new ArrayList<>();
-        auths.add(new SimpleGrantedAuthority("role1"));
+//        auths.add(new SimpleGrantedAuthority("role1"));
         return new User(username,"pass1",auths) ;
 //        throw new UsernameNotFoundException("Fake for "+username);
     }
