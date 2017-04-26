@@ -1,36 +1,36 @@
-//package eu.amova.cloud.platform.service.security.configuration;
-//
-//import org.apache.log4j.Logger;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//
-//import javax.servlet.http.HttpServletResponse;
-//
-///**
-// * @author: vuru
-// * Date: 19.04.2017
-// * Time: 08:36
-// */
-//
-//@Configuration
-//public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//    @Autowired
-//    private Logger log;
-//
+package eu.amova.cloud.platform.service.security.configuration;
+
+import eu.amova.cloud.platform.service.security.dao.ClientDetailsRepository;
+import org.apache.commons.logging.Log;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+/**
+ * @author: vuru
+ * Date: 19.04.2017
+ * Time: 08:36
+ */
+
+@Configuration
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private Log log;
+
+
+    @Autowired
+    private ClientDetailsRepository clientDetailsRepository;
+
 //    @Override
 //    @Bean
 //    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        log.debug("Yeas");
-//        return super.authenticationManagerBean();
+//        AuthenticationManager authenticationManager = super.authenticationManagerBean();
+//        return authenticationManager;
 //    }
-//
-//    @Override
+
+    //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http
 //                .csrf().disable()
@@ -43,8 +43,9 @@
 //                .httpBasic();
 //    }
 //
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(clientDetailsRepository);
 //        auth.inMemoryAuthentication()
 //                .withUser("reader")
 //                .password("reader")
@@ -53,5 +54,5 @@
 //                .withUser("writer")
 //                .password("writer")
 //                .authorities("FOO_READ", "FOO_WRITE");
-//    }
-//}
+    }
+}
