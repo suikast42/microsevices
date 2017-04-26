@@ -1,7 +1,6 @@
 package eu.amova.cloud.platform.service.security.configuration;
 
-import eu.amova.cloud.platform.service.security.dao.ClientDetailsRepository;
-import org.apache.commons.logging.Log;
+import eu.amova.cloud.platform.service.security.service.ClientDetailsIntegrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,20 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private Log log;
+    private ClientDetailsIntegrationService clientDetailsRepository;
 
-
-    @Autowired
-    private ClientDetailsRepository clientDetailsRepository;
-
-//    @Override
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        AuthenticationManager authenticationManager = super.authenticationManagerBean();
-//        return authenticationManager;
-//    }
-
-        @Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
@@ -51,13 +39,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(clientDetailsRepository);
-//        auth.inMemoryAuthentication()
-//                .withUser("reader")
-//                .password("reader")
-//                .authorities("FOO_READ")
-//                .and()
-//                .withUser("writer")
-//                .password("writer")
-//                .authorities("FOO_READ", "FOO_WRITE");
     }
 }

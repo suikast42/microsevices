@@ -33,8 +33,7 @@ public class CloudEnterprisePlatformSecurityApplication {
     @Bean
     @Lazy
    public Log getLogger(InjectionPoint injectionPoint){
-
-       Log logger = null;
+       Log logger ;
        if (injectionPoint.getAnnotatedElement().isAnnotationPresent(NamedLogger.class)) {
            NamedLogger annotation = injectionPoint.getAnnotatedElement().getAnnotation(NamedLogger.class);
            logger = LogFactory.getLog(annotation.loggername());

@@ -27,18 +27,18 @@ public class EntityBase {
     private Date creationTime;
 
     @PrePersist
-    private void prePersist(){
-        if(creationTime == null){
+    private void prePersist() {
+        if (creationTime == null) {
             creationTime = new Date();
         }
-        if(lastChangeTime == null){
+        if (lastChangeTime == null) {
             lastChangeTime = new Date();
         }
     }
 
     @PreUpdate
-    private void preUpdate(){
-            lastChangeTime = new Date();
+    private void preUpdate() {
+        lastChangeTime = new Date();
     }
 
     public Long getId() {
@@ -77,5 +77,10 @@ public class EntityBase {
         return id != null ? id.hashCode() : 0;
     }
 
- 
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", lastChangeTime=" + lastChangeTime +
+                ", creationTime=" + creationTime;
+    }
 }

@@ -1,4 +1,4 @@
-package eu.amova.cloud.platform.service.security.dao;
+package eu.amova.cloud.platform.service.security.service;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -22,11 +22,12 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class ClientDetailsRepository implements ClientDetailsService,ClientRegistrationService,UserDetailsService {
+public class ClientDetailsIntegrationService implements ClientDetailsService,ClientRegistrationService,UserDetailsService {
 
     @PersistenceContext
     private EntityManager  em;
 
+    // from UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<SimpleGrantedAuthority>  auths = new ArrayList<>();
