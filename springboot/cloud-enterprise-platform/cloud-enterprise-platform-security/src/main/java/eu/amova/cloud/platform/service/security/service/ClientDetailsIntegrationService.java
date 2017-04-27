@@ -45,7 +45,7 @@ public class ClientDetailsIntegrationService implements ClientDetailsService,Cli
             if (user == null) {
                 throw new UsernameNotFoundException("No user found with username: " + username);
             }
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
+            return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
