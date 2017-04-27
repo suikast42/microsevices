@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.lang.annotation.Documented;
@@ -22,6 +23,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableAutoConfiguration
+@EnableJpaRepositories
 //@EnableResourceServer
 public class CloudEnterprisePlatformSecurityApplication {
 
@@ -32,16 +34,16 @@ public class CloudEnterprisePlatformSecurityApplication {
 
     @Bean
     @Lazy
-   public Log getLogger(InjectionPoint injectionPoint){
-       Log logger ;
-       if (injectionPoint.getAnnotatedElement().isAnnotationPresent(NamedLogger.class)) {
-           NamedLogger annotation = injectionPoint.getAnnotatedElement().getAnnotation(NamedLogger.class);
-           logger = LogFactory.getLog(annotation.loggername());
-       } else {
-           logger = LogFactory.getLog(injectionPoint.getMember().getDeclaringClass().getName());
-       }
-       return logger;
-   }
+    public Log getLogger(InjectionPoint injectionPoint) {
+        Log logger;
+        if (injectionPoint.getAnnotatedElement().isAnnotationPresent(NamedLogger.class)) {
+            NamedLogger annotation = injectionPoint.getAnnotatedElement().getAnnotation(NamedLogger.class);
+            logger = LogFactory.getLog(annotation.loggername());
+        } else {
+            logger = LogFactory.getLog(injectionPoint.getMember().getDeclaringClass().getName());
+        }
+        return logger;
+    }
 
 
     @Target({TYPE, METHOD, PARAMETER, FIELD})

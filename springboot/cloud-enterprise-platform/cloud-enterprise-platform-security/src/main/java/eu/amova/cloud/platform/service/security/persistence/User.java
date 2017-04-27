@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Locale;
 
 /**
  * @author: vuru
@@ -15,6 +17,14 @@ import java.util.Collection;
 @Table(name = "user_account")
 public class User extends EntityBase {
 
+    @Column (length = 255)
+    @NotNull
+    private String login;
+
+    @Column
+    @NotNull
+    private Locale locale;
+    
     @Column (length = 255)
     @NotNull
     private String firstName;
@@ -40,20 +50,34 @@ public class User extends EntityBase {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> roles;
+    private Collection<Role> roles = new HashSet<>();
 
     public User() {
         super();
         this.enabled = false;
     }
 
+    public String getLogin() {
+        return login;
+    }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(final String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -61,7 +85,7 @@ public class User extends EntityBase {
         return lastName;
     }
 
-    public void setLastName(final String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -69,31 +93,23 @@ public class User extends EntityBase {
         return email;
     }
 
-    public void setEmail(final String username) {
-        this.email = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(final String password) {
+    public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(final Collection<Role> roles) {
-        this.roles = roles;
     }
 
     public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(final boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -105,10 +121,20 @@ public class User extends EntityBase {
         this.secret = secret;
     }
 
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
-       return " User{" + super.toString() +
-                " firstName='" + firstName + '\'' +
+        return "User{ " + super.toString() +
+                " login='" + login + '\'' +
+                ", locale=" + locale +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

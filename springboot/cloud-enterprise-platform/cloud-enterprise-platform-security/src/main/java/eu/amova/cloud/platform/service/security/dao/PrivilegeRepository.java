@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Date: 26.04.2017
  * Time: 16:14
  */
-public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
+public interface PrivilegeRepository extends JpaRepository<Privilege, Long> ,PrivilegeRepositoryExtended {
 
     Privilege findByName(String name);
 

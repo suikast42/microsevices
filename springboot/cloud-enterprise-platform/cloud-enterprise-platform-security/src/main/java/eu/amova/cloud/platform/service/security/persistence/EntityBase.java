@@ -1,8 +1,11 @@
 package eu.amova.cloud.platform.service.security.persistence;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * @author: vuru
@@ -18,63 +21,92 @@ public class EntityBase {
     @Column(name = "ID")
     private Long id;
 
+    @Column(name = "UUID",length = 42)
+    private String uuid;
+
     @Column(name = "LASTCHANGETIME", nullable = false, length = 11)
     @NotNull
-    private Date lastChangeTime;
-
+    private LocalDateTime lastChangeTime;
     @Column(name = "CREATIONTIME", nullable = false, length = 11)
     @NotNull
-    private Date creationTime;
+    private LocalDateTime creationTime;
+
+    public EntityBase() {
+        creationTime = LocalDateTime.now();
+        uuid = UUID.randomUUID().toString();
+    }
 
     @PrePersist
     private void prePersist() {
-        if (creationTime == null) {
-            creationTime = new Date();
-        }
-        if (lastChangeTime == null) {
-            lastChangeTime = new Date();
-        }
+        preUpdate();
     }
 
     @PreUpdate
     private void preUpdate() {
-        lastChangeTime = new Date();
+        lastChangeTime = LocalDateTime.now();
     }
 
     public Long getId() {
         return id;
     }
 
-
-    public Date getLastChangeTime() {
+    public LocalDateTime getLastChangeTime() {
         return lastChangeTime;
     }
 
-    public void setLastChangeTime(Date lastChangeTime) {
+    public void setLastChangeTime(LocalDateTime lastChangeTime) {
         this.lastChangeTime = lastChangeTime;
     }
 
-    public Date getCreationTime() {
+    public LocalDateTime getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(Date creationTime) {
+    public void setCreationTime(LocalDateTime creationTime) {
         this.creationTime = creationTime;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EntityBase)) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        //    if (!super.equals(obj))
+        //      return false;
+        //    if (getClass() != obj.getClass()) {
+        if (Hibernate.getClass(this) != Hibernate.getClass(obj)) {
+            return false;
+        }
+        if (!(obj instanceof EntityBase)) {
+            return false;
+        }
+        EntityBase other = (EntityBase) obj;
 
-        EntityBase that = (EntityBase) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
+        if (getId() != null && getId().equals(other.getId())) {
+            return true;
+        }
+        if (!getCreationTime().equals(other.getCreationTime())) {
+            return false;
+        }
+        if (!getUuid().equals(other.getUuid())) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (creationTime != null ? creationTime.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -83,4 +115,18 @@ public class EntityBase {
                 ", lastChangeTime=" + lastChangeTime +
                 ", creationTime=" + creationTime;
     }
+
+//    private static class AtomicIntegerWarpper {
+//        private static final AtomicInteger atomicInteger = new AtomicInteger(0);
+//
+//        public static final int incrementAndGet() {
+//            int returnvalue = atomicInteger.incrementAndGet();
+//            if (returnvalue >= 1000) {
+//                atomicInteger.set(0);
+//                returnvalue = atomicInteger.incrementAndGet();
+//                System.err.println("RESETT");
+//            }
+//            return returnvalue;
+//        }
+//    }
 }

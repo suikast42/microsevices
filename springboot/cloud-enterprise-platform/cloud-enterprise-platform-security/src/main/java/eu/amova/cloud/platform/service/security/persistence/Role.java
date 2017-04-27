@@ -4,6 +4,7 @@ package eu.amova.cloud.platform.service.security.persistence;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * @author: vuru
@@ -15,7 +16,7 @@ import java.util.Collection;
 public class Role extends EntityBase {
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+    private Collection<User> users = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))

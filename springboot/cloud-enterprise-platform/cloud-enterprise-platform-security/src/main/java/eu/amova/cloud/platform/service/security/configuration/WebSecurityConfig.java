@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
