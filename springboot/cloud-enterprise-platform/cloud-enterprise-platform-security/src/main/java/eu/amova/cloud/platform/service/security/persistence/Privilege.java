@@ -4,6 +4,7 @@ package eu.amova.cloud.platform.service.security.persistence;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * @author: vuru
@@ -11,7 +12,7 @@ import java.util.Collection;
  * Time: 15:46
  */
 @Entity
-@Table(name = "role_privilege",
+@Table(name = "Privileges",
         indexes = {
                 @Index(name = "IDX_role_privilege_NAME", columnList = "appId"),
                 @Index(name = "IDX_role_privilege_APPID", columnList = "name"),
@@ -41,7 +42,7 @@ public class Privilege extends EntityBase {
     private String description;
 
     @ManyToMany(mappedBy = "privileges")
-    private Collection<Role> roles;
+    private Collection<Role> roles = new HashSet<>();
 
     public Privilege() {
         this(null, null);

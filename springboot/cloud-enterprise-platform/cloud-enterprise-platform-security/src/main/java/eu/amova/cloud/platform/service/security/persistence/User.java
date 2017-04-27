@@ -14,8 +14,13 @@ import java.util.Locale;
  * Time: 15:26
  */
 @Entity
-@Table(name = "user_account")
+@Table(name = "Users")
 public class User extends EntityBase {
+
+    public enum FixedUsers{
+        Admin,
+        Developer,
+    }
 
     @Column (length = 255)
     @NotNull
