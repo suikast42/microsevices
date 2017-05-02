@@ -45,7 +45,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private PasswordEncoder passwordEncoder;
 
 
-
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {

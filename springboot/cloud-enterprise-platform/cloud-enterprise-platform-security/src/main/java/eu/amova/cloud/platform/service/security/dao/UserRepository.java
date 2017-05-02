@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Date: 26.04.2017
  * Time: 16:08
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> , UserRepositoryExtended {
 
-    User findByLogin(String login);
+//    User findByLogin(String login);
 
 }

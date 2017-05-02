@@ -29,7 +29,7 @@ import java.util.List;
 @Service
 @Repository
 @Transactional
-public class ClientDetailsIntegrationService implements ClientDetailsService,ClientRegistrationService,UserDetailsService {
+public class ClientDetailsIntegrationService implements ClientDetailsService, ClientRegistrationService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -43,6 +43,7 @@ public class ClientDetailsIntegrationService implements ClientDetailsService,Cli
         try {
             User user = userRepository.findByLogin(username);
             if (user == null) {
+                // TODO: 27.04.2017 make a single object 
                 throw new UsernameNotFoundException("No user found with username: " + username);
             }
             return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
@@ -53,32 +54,40 @@ public class ClientDetailsIntegrationService implements ClientDetailsService,Cli
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-       throw new  ClientRegistrationException("Fake for "+clientId) ;
+        try {
+            User user = userRepository.findByLogin(clientId);
+            if (user == null) {
+                throw new ClientRegistrationException("No user found with username: " + clientId);
+            }
+            return new OAuth2ClientDetails(user);
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void addClientDetails(ClientDetails clientDetails) throws ClientAlreadyExistsException {
-        throw new  ClientAlreadyExistsException("Fake for "+clientDetails) ;
+        throw new ClientAlreadyExistsException("Fake for " + clientDetails);
     }
 
     @Override
     public void updateClientDetails(ClientDetails clientDetails) throws NoSuchClientException {
-        throw new  NoSuchClientException("Fake for "+clientDetails) ;
+        throw new NoSuchClientException("Fake for " + clientDetails);
     }
 
     @Override
     public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {
-        throw new  NoSuchClientException("Fake for "+clientId) ;
+        throw new NoSuchClientException("Fake for " + clientId);
     }
 
     @Override
     public void removeClientDetails(String clientId) throws NoSuchClientException {
-        throw new  NoSuchClientException("Fake for "+clientId) ;
+        throw new NoSuchClientException("Fake for " + clientId);
     }
 
     @Override
     public List<ClientDetails> listClientDetails() {
-        throw new  RuntimeException("Fake") ;
+        throw new RuntimeException("Fake");
     }
 
 

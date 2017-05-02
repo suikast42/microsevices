@@ -15,6 +15,9 @@ import java.util.Locale;
  */
 @Entity
 @Table(name = "Users")
+//@NamedEntityGraphs({
+//
+//})
 public class User extends EntityBase {
 
     public enum FixedUsers{
@@ -53,7 +56,13 @@ public class User extends EntityBase {
     @Column
     private String secret;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Column
+    private int accessTokenValiditySeconds = 60 * 5;
+
+    @Column
+    private int refreshTokenValiditySecond = 60 * 5;
+
+    @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles = new HashSet<>();
 
@@ -132,6 +141,22 @@ public class User extends EntityBase {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public int getAccessTokenValiditySeconds() {
+        return accessTokenValiditySeconds;
+    }
+
+    public void setAccessTokenValiditySeconds(int accessTokenValiditySeconds) {
+        this.accessTokenValiditySeconds = accessTokenValiditySeconds;
+    }
+
+    public int getRefreshTokenValiditySecond() {
+        return refreshTokenValiditySecond;
+    }
+
+    public void setRefreshTokenValiditySecond(int refreshTokenValiditySecond) {
+        this.refreshTokenValiditySecond = refreshTokenValiditySecond;
     }
 
     @Override

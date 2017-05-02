@@ -23,7 +23,7 @@ public class Role extends EntityBase {
     private Collection<User> users = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    @JoinTable( joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges = new HashSet<>();
 
     @Column(length = 256)
