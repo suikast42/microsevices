@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author: vuru
@@ -41,8 +42,8 @@ public class Privilege extends EntityBase {
     @NotNull
     private String description;
 
-    @ManyToMany(mappedBy = "privileges")
-    private Collection<Role> roles = new HashSet<>();
+    @ManyToMany(mappedBy = "privileges",fetch = FetchType.LAZY)
+    private Set<Role> roles = new HashSet<>();
 
     public Privilege() {
         this(null, null);
@@ -71,7 +72,7 @@ public class Privilege extends EntityBase {
         return roles;
     }
 
-    public void setRoles(final Collection<Role> roles) {
+    public void setRoles(final Set<Role> roles) {
         this.roles = roles;
     }
 

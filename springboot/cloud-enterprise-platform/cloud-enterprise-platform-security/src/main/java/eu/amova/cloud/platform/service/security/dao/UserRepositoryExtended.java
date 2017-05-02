@@ -8,5 +8,11 @@ import eu.amova.cloud.platform.service.security.persistence.User;
  * Time: 19:27
  */
 public interface UserRepositoryExtended  {
+
+    /**
+     *
+     * @param login the login name of the user
+     * @return  the full tree, user -> roles -> privileges
+     */
     User findByLogin(String login);
 }

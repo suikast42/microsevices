@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author: vuru
@@ -19,12 +20,13 @@ public class Role extends EntityBase {
         Administrator,
         Developer,
     }
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+    private Set<User> users = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
-    private Collection<Privilege> privileges = new HashSet<>();
+    private Set<Privilege> privileges = new HashSet<>();
 
     @Column(length = 256)
     @NotNull
@@ -38,7 +40,7 @@ public class Role extends EntityBase {
         return users;
     }
 
-    public void setUsers(Collection<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
@@ -46,7 +48,7 @@ public class Role extends EntityBase {
         return privileges;
     }
 
-    public void setPrivileges(Collection<Privilege> privileges) {
+    public void setPrivileges(Set<Privilege> privileges) {
         this.privileges = privileges;
     }
 
