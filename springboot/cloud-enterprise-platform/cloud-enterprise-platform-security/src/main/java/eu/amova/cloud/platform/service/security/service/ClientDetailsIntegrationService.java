@@ -23,7 +23,7 @@ import java.util.List;
 
 @Service
 @Repository
-//@Transactional
+@Transactional
 public class ClientDetailsIntegrationService implements ClientDetailsService, ClientRegistrationService, UserDetailsService {
 
     @Autowired
@@ -37,13 +37,14 @@ public class ClientDetailsIntegrationService implements ClientDetailsService, Cl
 
     // from UserDetailsService
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             User user = userRepository.findByLogin(username);
             if (user == null) {
                 throw new UsernameNotFoundException("No user found with username: " + username);
             }
-           return new UserDetailsDto(user);
+            return new UserDetailsDto(user);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
