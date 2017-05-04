@@ -1,4 +1,4 @@
-package eu.amova.cloud.platform.service.security.service;
+package eu.amova.cloud.platform.service.security.spring.integration;
 
 import org.springframework.security.core.userdetails.User;
 

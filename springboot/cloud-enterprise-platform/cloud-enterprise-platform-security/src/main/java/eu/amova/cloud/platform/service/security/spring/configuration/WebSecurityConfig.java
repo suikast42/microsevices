@@ -1,19 +1,18 @@
-package eu.amova.cloud.platform.service.security.configuration;
+package eu.amova.cloud.platform.service.security.spring.configuration;
 
-import eu.amova.cloud.platform.service.security.service.ClientDetailsIntegrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,14 +23,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
-    private ClientDetailsIntegrationService clientDetailsRepository;
+    private UserDetailsService userDetailsService;
 
+    /////////////////////////// Configurations ////////////////////////////////
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
 
-    
+        // if you want change the provider. For example a custom DaoAuthenticationProvider
+        //auth.authenticationProvider(authProvider());
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -47,10 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(clientDetailsRepository).passwordEncoder(encoder());
-    }
+
+    /////////////////////////// Producers ////////////////////////////////
 
 
     @Bean
@@ -58,4 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(7);
     }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
 }
