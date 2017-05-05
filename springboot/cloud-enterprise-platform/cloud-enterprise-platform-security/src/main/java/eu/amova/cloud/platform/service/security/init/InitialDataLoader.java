@@ -1,8 +1,10 @@
 package eu.amova.cloud.platform.service.security.init;
 
+import eu.amova.cloud.platform.service.security.dao.OAuth2ClientDetailsRepository;
 import eu.amova.cloud.platform.service.security.dao.PrivilegeRepository;
 import eu.amova.cloud.platform.service.security.dao.RoleRepository;
 import eu.amova.cloud.platform.service.security.dao.UserRepository;
+import eu.amova.cloud.platform.service.security.persistence.OAuth2ClientDetails;
 import eu.amova.cloud.platform.service.security.persistence.Privilege;
 import eu.amova.cloud.platform.service.security.persistence.Role;
 import eu.amova.cloud.platform.service.security.persistence.User;
@@ -44,7 +46,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+    @Autowired
+    private OAuth2ClientDetailsRepository clientDetailsRepository;
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -54,7 +57,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         initUsers();
         assignDefaultRoles();
         assignPrivileges();
+        initClientDetails();
     }
+
 
     private void initPrivileges() {
         logger.debug("initPrivileges");
@@ -137,6 +142,21 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         for (Privilege priv : all) {
             priv.getRoles().add(adminRole);
             priv.getRoles().add(developerRole);
+        }
+    }
+
+    private void initClientDetails() {
+        logger.debug("initClientDetails");
+        OAuth2ClientDetails desktop = clientDetailsRepository.findByClientId("desktop");
+        if(desktop == null){
+            desktop =   new OAuth2ClientDetails();
+            desktop.setClientId("desktop");
+            desktop.setResourceIds("resource");
+            desktop.setClientSecret("secret");
+            desktop.setScope("read,write");
+            desktop.setAutoapprove(desktop.getScope());
+            desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,implicit,password,client_credentials");
+            clientDetailsRepository.save(desktop);
         }
     }
 
