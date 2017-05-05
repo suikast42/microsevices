@@ -19,6 +19,7 @@ public class Role extends EntityBase {
     public enum FixedRoles{
         Administrator,
         Developer,
+        ACTUATOR,
     }
 
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)

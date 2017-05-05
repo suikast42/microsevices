@@ -101,7 +101,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         logger.debug("assignDefaultRoles");
         for (Role.FixedRoles fixedRole : Role.FixedRoles.values()) {
             Role role = roleRepository.findByName(fixedRole.name());
-            if (role.getName().equals(Role.FixedRoles.Administrator.name())) {
+            if (    role.getName().equals(Role.FixedRoles.Administrator.name()) ||
+               role.getName().equals(Role.FixedRoles.ACTUATOR.name())
+                    ) {
                 {
                     User adminUser = userRepository.findByLogin(User.FixedUsers.Admin.name());
                     adminUser.getRoles().add(role);
