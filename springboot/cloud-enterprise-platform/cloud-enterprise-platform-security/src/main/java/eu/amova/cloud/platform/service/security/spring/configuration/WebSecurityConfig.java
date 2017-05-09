@@ -1,6 +1,7 @@
 package eu.amova.cloud.platform.service.security.spring.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,8 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -36,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
-        auth.parentAuthenticationManager(authenticationManager);
+        auth.parentAuthenticationManager(authenticationManagerBean());
         // if you want change the provider. For example a custom DaoAuthenticationProvider
         //auth.authenticationProvider(authProvider());
     }
@@ -45,15 +44,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+//        http
+//                .csrf().disable()
+//                .exceptionHandling()
+//                .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/**").authenticated()
+//                .and()
+//            .httpBasic() ;
+//        http
+//                .httpBasic().and()
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .anyRequest().permitAll()
+//               ;
+
         http
-                .csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+                .httpBasic().and() .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/**").authenticated()
-                .and()
-                .httpBasic();
+                .csrf().disable();
     }
 
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean()
+            throws Exception {
+        return super.authenticationManagerBean();
+    }
 }

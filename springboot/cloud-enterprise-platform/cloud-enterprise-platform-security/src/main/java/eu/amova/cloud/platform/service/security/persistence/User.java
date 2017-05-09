@@ -24,33 +24,31 @@ public class User extends EntityBase {
 
     public static final String EG_WITH_ROLES_AND_PRIVS = "User.With.Roles.And.Privs";
 
-    @Column(length = 255)
+    @Column(length = 256)
     @NotNull
     private String login;
+    
     @Column
     @NotNull
     private Locale locale;
-    @Column(length = 255)
+    @Column(length = 256)
     @NotNull
+
     private String firstName;
-    @Column(length = 255)
+    @Column(length = 256)
     @NotNull
     private String lastName;
     @Column
     @NotNull
     @Email
     private String email;
-    @Column(length = 60)
+
+    @Column(length = 256)
     @NotNull
     private String password;
+
     @Column
     private boolean enabled;
-    @Column
-    private String secret;
-    @Column
-    private int accessTokenValiditySeconds = 60 * 5;
-    @Column
-    private int refreshTokenValiditySecond = 60 * 5;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -117,13 +115,6 @@ public class User extends EntityBase {
         this.enabled = enabled;
     }
 
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
 
     public Collection<Role> getRoles() {
         return roles;
@@ -133,21 +124,7 @@ public class User extends EntityBase {
         this.roles = roles;
     }
 
-    public int getAccessTokenValiditySeconds() {
-        return accessTokenValiditySeconds;
-    }
 
-    public void setAccessTokenValiditySeconds(int accessTokenValiditySeconds) {
-        this.accessTokenValiditySeconds = accessTokenValiditySeconds;
-    }
-
-    public int getRefreshTokenValiditySecond() {
-        return refreshTokenValiditySecond;
-    }
-
-    public void setRefreshTokenValiditySecond(int refreshTokenValiditySecond) {
-        this.refreshTokenValiditySecond = refreshTokenValiditySecond;
-    }
 
     @Override
     public String toString() {
@@ -159,7 +136,6 @@ public class User extends EntityBase {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
-                ", secret='" + secret + '\'' +
                 '}';
     }
 

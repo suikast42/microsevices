@@ -18,6 +18,9 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -35,8 +38,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @EnableJpaRepositories
 public class CloudEnterprisePlatformSecurityApplication {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(CloudEnterprisePlatformSecurityApplication.class, args);
@@ -83,15 +84,11 @@ public class CloudEnterprisePlatformSecurityApplication {
         return new BCryptPasswordEncoder(7);
     }
 
-    @Bean
-    @Lazy
-    public AuthenticationManager authenticationManager() {
-      return authenticationManager;
-    }
 
     @Bean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
     }
+
 
 }

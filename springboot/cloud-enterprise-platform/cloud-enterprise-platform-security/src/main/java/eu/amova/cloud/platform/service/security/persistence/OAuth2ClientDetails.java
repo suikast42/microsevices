@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "oauth_client_details")
-public class OAuth2ClientDetails  extends EntityBase{
+public class OAuth2ClientDetails{
 //    client_id VARCHAR(256) PRIMARY KEY,
 //    resource_ids VARCHAR(256),
 //    client_secret VARCHAR(256),
@@ -25,6 +25,8 @@ public class OAuth2ClientDetails  extends EntityBase{
 //    refresh_token_validity INTEGER,
 //    additional_information VARCHAR(4096),
 //    autoapprove VARCHAR(256)
+
+    @Id
     @Column(name = "client_id",unique = true,length = 256)
     @NotNull
     private String clientId;

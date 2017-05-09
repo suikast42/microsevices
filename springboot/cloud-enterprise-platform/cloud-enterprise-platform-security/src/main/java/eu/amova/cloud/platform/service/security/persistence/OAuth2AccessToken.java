@@ -1,9 +1,6 @@
 package eu.amova.cloud.platform.service.security.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author: vuru
@@ -12,7 +9,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "oauth_access_token")
-public class OAuth2AccessToken extends EntityBase{
+public class OAuth2AccessToken {
 //    token_id VARCHAR(256),
 //    token LONGVARBINARY,
 //    authentication_id VARCHAR(256) PRIMARY KEY,
@@ -21,6 +18,7 @@ public class OAuth2AccessToken extends EntityBase{
 //    authentication LONGVARBINARY,
 //    refresh_token VARCHAR(256)
 
+    @Id
     @Column(name = "token_id",length = 256)
     private String tokenId ;
 

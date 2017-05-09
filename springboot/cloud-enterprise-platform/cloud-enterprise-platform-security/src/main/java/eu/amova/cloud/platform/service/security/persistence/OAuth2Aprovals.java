@@ -2,7 +2,9 @@ package eu.amova.cloud.platform.service.security.persistence;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "oauth_approvals")
-public class OAuth2Aprovals extends EntityBase{
+public class OAuth2Aprovals implements Serializable {
 
 //    userId VARCHAR(256),
 //    clientId VARCHAR(256),
@@ -23,9 +25,11 @@ public class OAuth2Aprovals extends EntityBase{
 //    lastModifiedAt TIMESTAMP
 
     @Column(length = 256)
+    @Id
     private String   userId;
 
     @Column(length = 256)
+    @Id
     private String   clientId;
 
     @Column(length = 256)

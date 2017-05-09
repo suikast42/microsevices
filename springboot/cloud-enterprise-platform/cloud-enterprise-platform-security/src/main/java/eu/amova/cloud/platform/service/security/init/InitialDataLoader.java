@@ -152,8 +152,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             desktop =   new OAuth2ClientDetails();
             desktop.setClientId("desktop");
             desktop.setResourceIds("resource");
-            desktop.setClientSecret("secret");
-            desktop.setScope("read,write");
+            desktop.setClientSecret(passwordEncoder.encode("secret"));
+            desktop.setScope("read,write,trust");
             desktop.setAutoapprove(desktop.getScope());
             desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,implicit,password,client_credentials");
             clientDetailsRepository.save(desktop);

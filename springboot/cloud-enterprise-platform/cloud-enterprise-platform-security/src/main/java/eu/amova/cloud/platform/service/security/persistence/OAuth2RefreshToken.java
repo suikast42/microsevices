@@ -1,9 +1,6 @@
 package eu.amova.cloud.platform.service.security.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author: vuru
@@ -12,11 +9,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "oauth_refresh_token")
-public class OAuth2RefreshToken extends EntityBase{
+public class OAuth2RefreshToken{
 //    token_id VARCHAR(256),
 //    token BLOB,
 //    authentication BLOB
 
+    @Id
     @Column(length = 256,name = "token_id")
     private String  tokenId;
 
