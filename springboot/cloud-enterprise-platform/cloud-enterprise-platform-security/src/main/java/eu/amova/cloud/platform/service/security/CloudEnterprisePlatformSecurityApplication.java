@@ -14,8 +14,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
@@ -37,6 +40,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @EnableAutoConfiguration
 @EnableJpaRepositories
 public class CloudEnterprisePlatformSecurityApplication {
+
 
 
     public static void main(String[] args) throws Exception {
@@ -77,14 +81,12 @@ public class CloudEnterprisePlatformSecurityApplication {
         return  DataSourceBuilder.create().build();
     }
 
-
     @Bean
     @Lazy
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(7);
     }
-
-
+    
     @Bean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();

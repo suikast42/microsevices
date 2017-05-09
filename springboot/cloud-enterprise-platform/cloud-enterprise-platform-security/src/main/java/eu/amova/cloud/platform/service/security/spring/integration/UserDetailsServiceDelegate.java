@@ -36,6 +36,7 @@ public class UserDetailsServiceDelegate implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final String ip = getClientIP();
+        System.err.println("loadUserByUsername "+username);
         if (loginAttemptService.isBlocked(ip)) {
             throw new RuntimeException(MessageFormat.format("The ip {0} is blocked. Too many login attempts {1}",ip,loginAttemptService.getMAX_ATTEMPT()));
         }
