@@ -147,16 +147,37 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     private void initClientDetails() {
         logger.debug("initClientDetails");
-        OAuth2ClientDetails desktop = clientDetailsRepository.findByClientId("desktop");
-        if(desktop == null){
-            desktop =   new OAuth2ClientDetails();
-            desktop.setClientId("desktop");
-            desktop.setResourceIds("resource");
-            desktop.setClientSecret(passwordEncoder.encode("secret"));
-            desktop.setScope("read,write,trust");
-            desktop.setAutoapprove(desktop.getScope());
-            desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,implicit,password,client_credentials");
-            clientDetailsRepository.save(desktop);
+        {
+            OAuth2ClientDetails desktop = clientDetailsRepository.findByClientId("desktop");
+            if(desktop == null){
+                // End users with client credentials
+                logger.debug("\tCreating OAuth2ClientDetails desktop");
+                desktop =   new OAuth2ClientDetails();
+                desktop.setClientId("desktop");
+                desktop.setResourceIds("resource");
+                desktop.setClientSecret(passwordEncoder.encode("secret"));
+                desktop.setScope("read,write,trust");
+                desktop.setAutoapprove(desktop.getScope());
+//            desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,implicit,password,client_credentials");
+                desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,password");
+                clientDetailsRepository.save(desktop);
+            }
+        }
+        {
+            OAuth2ClientDetails scs = clientDetailsRepository.findByClientId("scs");
+            if(scs == null){
+                //  machine-to-machine authentication where a specific user’s permission to access data is not required
+                logger.debug("\tCreating OAuth2ClientDetails scs");
+                scs =   new OAuth2ClientDetails();
+                scs.setClientId("scs");
+                scs.setResourceIds("resource");
+                scs.setClientSecret(passwordEncoder.encode("secret"));
+                scs.setScope("read,write,trust");
+                scs.setAutoapprove(scs.getScope());
+//            desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,implicit,password,client_credentials");
+                scs.setAuthorizedGrantTypes("authorization_code,refresh_token,client_credentials");
+                clientDetailsRepository.save(scs);
+            }
         }
     }
 

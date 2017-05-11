@@ -3,6 +3,7 @@ package eu.amova.cloud.platform.service.security.spring.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
+    
 
     @Autowired
     private PasswordEncoder encoder;
@@ -34,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
-//        auth.parentAuthenticationManager(authenticationManagerBean());
+        auth.parentAuthenticationManager(authenticationManagerBean());
         // if you want change the provider. For example a custom DaoAuthenticationProvider
         auth.authenticationProvider(authenticationManagerProvider());
     }
@@ -42,9 +43,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.httpBasic().and()
-                .authorizeRequests().anyRequest().authenticated().and()
+        http
+                .httpBasic().disable()
+                .authorizeRequests()
+                .antMatchers("/**").authenticated()
+//                .anyRequest().authenticated()
+                .and()
                 .csrf().disable();
 //        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
@@ -56,6 +60,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setPasswordEncoder(encoder);
         authenticationProvider.setUserDetailsService(userDetailsService);
         return authenticationProvider;
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
 }

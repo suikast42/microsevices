@@ -2,6 +2,7 @@ package eu.amova.cloud.platform.service.security.spring.integration;
 
 import eu.amova.cloud.platform.service.security.dao.UserRepository;
 import eu.amova.cloud.platform.service.security.persistence.User;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.event.*;
@@ -23,6 +24,8 @@ import java.text.MessageFormat;
 @Transactional
 public class UserDetailsServiceDelegate implements UserDetailsService {
 
+    @Autowired
+    private Log logger;
 
     @Autowired
     private UserRepository userRepository;
@@ -35,8 +38,8 @@ public class UserDetailsServiceDelegate implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.debug("loadUserByUsername "+username);
         final String ip = getClientIP();
-        System.err.println("loadUserByUsername "+username);
         if (loginAttemptService.isBlocked(ip)) {
             throw new RuntimeException(MessageFormat.format("The ip {0} is blocked. Too many login attempts {1}",ip,loginAttemptService.getMAX_ATTEMPT()));
         }
