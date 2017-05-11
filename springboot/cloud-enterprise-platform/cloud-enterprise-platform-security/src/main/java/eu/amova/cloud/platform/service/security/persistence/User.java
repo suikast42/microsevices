@@ -142,7 +142,8 @@ public class User extends EntityBase {
     // Utils
     public final Collection<? extends GrantedAuthority> getAuthorities() {
         Set<String> privs = new HashSet<>();
-        roles.parallelStream().forEach(role -> role.getPrivileges().parallelStream().forEach(privilege -> privs.add(privilege.getName())));
+//        roles.parallelStream().forEach(role -> role.getPrivileges().parallelStream().forEach(privilege -> privs.add(privilege.getName())));
+        roles.parallelStream().forEach(role -> privs.add(role.getName()));
         return getGrantedAuthorities(privs);
     }
 

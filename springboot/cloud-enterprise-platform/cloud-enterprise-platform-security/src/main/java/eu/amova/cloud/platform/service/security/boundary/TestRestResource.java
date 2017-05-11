@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 /**
  * @author: vuru
@@ -25,6 +26,8 @@ public class TestRestResource {
 
     @RequestMapping(value = "/greeting", method = RequestMethod.GET)
     public ResponseEntity greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return ResponseEntity.status(HttpStatus.OK).body("Hello " + request.getRemoteUser() + " " + request.getRemoteAddr());
+        return ResponseEntity.status(HttpStatus.OK).body("Hello " + request.getRemoteUser() + " " + request.getRemoteAddr() +" "+ LocalDateTime.now());
     }
+
+ 
 }

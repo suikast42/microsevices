@@ -45,6 +45,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
 
     @Autowired
+//    @Qualifier(value = "authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
 
@@ -59,14 +60,6 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
         ;
     }
 
-//    @Override
-//    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//        endpoints.authenticationManager(authenticationManager)
-//                .userDetailsService(userDetailsService)
-//                .setClientDetailsService(clientDetailsService)
-//
-//        ;
-//    }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -76,7 +69,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
                 .tokenStore(tokenStore())
                 .approvalStore(approvalStore())
                 .authorizationCodeServices(authorizationCodeServices())
-                .setClientDetailsService(clientDetailsService);
+                .setClientDetailsService(clientDetailsService)
         ;
     }
 

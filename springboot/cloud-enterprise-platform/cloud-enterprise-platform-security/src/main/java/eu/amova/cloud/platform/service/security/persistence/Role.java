@@ -16,19 +16,11 @@ import java.util.Set;
 @Table(name = "Roles")
 public class Role extends EntityBase {
 
-    public enum FixedRoles{
-        Administrator,
-        Developer,
-        ACTUATOR,
-    }
-
-    @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
-
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable( joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private Set<Privilege> privileges = new HashSet<>();
-
     @Column(length = 256)
     @NotNull
     private String name;
@@ -63,8 +55,14 @@ public class Role extends EntityBase {
 
     @Override
     public String toString() {
-        return "Role{ " + super.toString()+
+        return "Role{ " + super.toString() +
                 " name='" + name + '\'' +
                 '}';
+    }
+
+    public enum FixedRoles {
+        ROLE_Administrator,
+        ROLE_Developer,
+        ROLE_ACTUATOR,
     }
 }

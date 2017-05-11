@@ -106,8 +106,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         logger.debug("assignDefaultRoles");
         for (Role.FixedRoles fixedRole : Role.FixedRoles.values()) {
             Role role = roleRepository.findByName(fixedRole.name());
-            if (    role.getName().equals(Role.FixedRoles.Administrator.name()) ||
-               role.getName().equals(Role.FixedRoles.ACTUATOR.name())
+            if (    role.getName().equals(Role.FixedRoles.ROLE_Administrator.name()) ||
+               role.getName().equals(Role.FixedRoles.ROLE_ACTUATOR.name())
                     ) {
                 {
                     User adminUser = userRepository.findByLogin(User.FixedUsers.Admin.name());
@@ -119,7 +119,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                     developerUser.getRoles().add(role);
                     role.getUsers().add(developerUser);
                 }
-            } else if (role.getName().equals(Role.FixedRoles.Developer.name())) {
+            } else if (role.getName().equals(Role.FixedRoles.ROLE_Developer.name())) {
                 {
                     User developerUser = userRepository.findByLogin(User.FixedUsers.Developer.name());
                     developerUser.getRoles().add(role);
@@ -134,8 +134,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private void assignPrivileges() {
         logger.debug("assignPrivileges");
         List<Privilege> all = privilegeRepository.findAll();
-        Role adminRole = roleRepository.findByName(Role.FixedRoles.Administrator.name());
-        Role developerRole = roleRepository.findByName(Role.FixedRoles.Developer.name());
+        Role adminRole = roleRepository.findByName(Role.FixedRoles.ROLE_Administrator.name());
+        Role developerRole = roleRepository.findByName(Role.FixedRoles.ROLE_Developer.name());
         adminRole.getPrivileges().addAll(all);
         developerRole.getPrivileges().addAll(all);
 
@@ -154,12 +154,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                 logger.debug("\tCreating OAuth2ClientDetails desktop");
                 desktop =   new OAuth2ClientDetails();
                 desktop.setClientId("desktop");
-                desktop.setResourceIds("resource");
+                desktop.setResourceIds("oauth2-resource");
                 desktop.setClientSecret(passwordEncoder.encode("secret"));
                 desktop.setScope("read,write,trust");
                 desktop.setAutoapprove(desktop.getScope());
 //            desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,implicit,password,client_credentials");
-                desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,password");
+                desktop.setAuthorizedGrantTypes("refresh_token,password");
                 clientDetailsRepository.save(desktop);
             }
         }
@@ -170,12 +170,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                 logger.debug("\tCreating OAuth2ClientDetails scs");
                 scs =   new OAuth2ClientDetails();
                 scs.setClientId("scs");
-                scs.setResourceIds("resource");
+                scs.setResourceIds("oauth2-resource");
                 scs.setClientSecret(passwordEncoder.encode("secret"));
                 scs.setScope("read,write,trust");
                 scs.setAutoapprove(scs.getScope());
 //            desktop.setAuthorizedGrantTypes("authorization_code,refresh_token,implicit,password,client_credentials");
-                scs.setAuthorizedGrantTypes("authorization_code,refresh_token,client_credentials");
+                scs.setAuthorizedGrantTypes("refresh_token,client_credentials");
                 clientDetailsRepository.save(scs);
             }
         }
