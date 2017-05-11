@@ -106,8 +106,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         logger.debug("assignDefaultRoles");
         for (Role.FixedRoles fixedRole : Role.FixedRoles.values()) {
             Role role = roleRepository.findByName(fixedRole.name());
-            if (    role.getName().equals(Role.FixedRoles.ROLE_Administrator.name()) ||
-               role.getName().equals(Role.FixedRoles.ROLE_ACTUATOR.name())
+            if (    role.getName().equals(Role.FixedRoles.Administrator.name()) ||
+               role.getName().equals(Role.FixedRoles.ACTUATOR.name())
                     ) {
                 {
                     User adminUser = userRepository.findByLogin(User.FixedUsers.Admin.name());
@@ -119,7 +119,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                     developerUser.getRoles().add(role);
                     role.getUsers().add(developerUser);
                 }
-            } else if (role.getName().equals(Role.FixedRoles.ROLE_Developer.name())) {
+            } else if (role.getName().equals(Role.FixedRoles.Developer.name())) {
                 {
                     User developerUser = userRepository.findByLogin(User.FixedUsers.Developer.name());
                     developerUser.getRoles().add(role);
@@ -134,8 +134,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private void assignPrivileges() {
         logger.debug("assignPrivileges");
         List<Privilege> all = privilegeRepository.findAll();
-        Role adminRole = roleRepository.findByName(Role.FixedRoles.ROLE_Administrator.name());
-        Role developerRole = roleRepository.findByName(Role.FixedRoles.ROLE_Developer.name());
+        Role adminRole = roleRepository.findByName(Role.FixedRoles.Administrator.name());
+        Role developerRole = roleRepository.findByName(Role.FixedRoles.Developer.name());
         adminRole.getPrivileges().addAll(all);
         developerRole.getPrivileges().addAll(all);
 

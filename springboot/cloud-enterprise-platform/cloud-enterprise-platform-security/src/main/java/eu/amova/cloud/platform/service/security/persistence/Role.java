@@ -61,8 +61,8 @@ public class Role extends EntityBase {
     }
 
     public enum FixedRoles {
-        ROLE_Administrator,
-        ROLE_Developer,
-        ROLE_ACTUATOR,
+        Administrator,
+        Developer,
+        ACTUATOR,
     }
 }
