@@ -154,7 +154,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                 logger.debug("\tCreating OAuth2ClientDetails desktop");
                 desktop =   new OAuth2ClientDetails();
                 desktop.setClientId("desktop");
-                desktop.setResourceIds("oauth2-resource");
+                desktop.setResourceIds("securityservice,test");
                 desktop.setClientSecret(passwordEncoder.encode("secret"));
                 desktop.setScope("read,write,trust");
                 desktop.setAutoapprove(desktop.getScope());
@@ -170,7 +170,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                 logger.debug("\tCreating OAuth2ClientDetails scs");
                 scs =   new OAuth2ClientDetails();
                 scs.setClientId("scs");
-                scs.setResourceIds("oauth2-resource");
+                scs.setResourceIds("securityservice,hmf");
                 scs.setClientSecret(passwordEncoder.encode("secret"));
                 scs.setScope("read,write,trust");
                 scs.setAutoapprove(scs.getScope());

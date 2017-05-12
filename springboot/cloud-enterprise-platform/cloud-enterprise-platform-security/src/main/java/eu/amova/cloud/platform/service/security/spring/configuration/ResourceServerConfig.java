@@ -20,11 +20,14 @@ package eu.amova.cloud.platform.service.security.spring.configuration;
 public class ResourceServerConfig  extends ResourceServerConfigurerAdapter {
 
 
-
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) {
+        resources.resourceId("securityservice");
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/test/greeting").authenticated();
+        http.authorizeRequests().antMatchers("/test/**").authenticated();
     }
 
 }

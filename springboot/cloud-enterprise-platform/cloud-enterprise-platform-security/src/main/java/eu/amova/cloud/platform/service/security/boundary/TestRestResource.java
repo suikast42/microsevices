@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,8 @@ public class TestRestResource {
 
     @Autowired
     private HttpServletRequest request;
+
+  
 
     @RequestMapping(value = "/greeting", method = RequestMethod.GET)
     public ResponseEntity greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
